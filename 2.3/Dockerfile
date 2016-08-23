@@ -27,7 +27,7 @@ COPY elasticsearch.yml logging.yml /etc/elasticsearch/
 
 EXPOSE 9200
 EXPOSE 9300
-USER 1001
+USER elasticsearch
 
 ENTRYPOINT ["container-entrypoint"]
 
