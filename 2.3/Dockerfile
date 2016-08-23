@@ -17,9 +17,10 @@ LABEL io.k8s.description="Elasticsearch container for allowing indexing and sear
 COPY elasticsearch.repo /etc/yum.repos.d/elasticsearch.repo
 RUN rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch && \
     yum install -y --setopt=tsflags=nodocs elasticsearch java-1.8.0-openjdk && \
-    yum clean all && \
-    mkdir -p /elasticsearch/persistent && \
-    chown -R 1001:0 /elasticsearch /usr/share/elasticsearch && \
+    yum clean all 
+
+RUN mkdir -p /elasticsearch/persistent && \
+    chown -R 1001:0 /elasticsearch /usr/share/elasticsearch /etc/elasticsearch /var/log/elasticsearch && \
     chmod -R og+rwx /elasticsearch
 
 COPY container-entrypoint /usr/bin/
@@ -27,7 +28,7 @@ COPY elasticsearch.yml logging.yml /etc/elasticsearch/
 
 EXPOSE 9200
 EXPOSE 9300
-USER elasticsearch
+USER 1001
 
 ENTRYPOINT ["container-entrypoint"]
 
